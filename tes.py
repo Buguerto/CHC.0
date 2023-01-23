@@ -11,9 +11,12 @@ import xgboost as xgb
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-# here enter the id of your google sheet
+# the ID is the code between the third / and the fourth /
+
 SAMPLE_SPREADSHEET_ID_input = '19T6DAOMgsbGSO2jRHFAOh1ATq9c_3OMiWZsH_LuTvs4'
 SAMPLE_RANGE_NAME = 'A1:AA1000'
+
+# This function creates the dataframe, do not modify
 
 def main():
     global values_input, service, df
@@ -45,18 +48,23 @@ def main():
     if not values_input and not values_expansion:
         print('No data found.')
 
+# Simple filter tool, takes person´s name and hero´s name and only shows the desired information.
 
-def consulta_simple():
+def simple_query():
+    global consulta, nombre, h_nombre
     nombre = input("Introduce el nombre ")
     h_nombre = input("Introduce el nombre del Heroe ")
-    newdf = df[(df.Nombre == nombre) & (df.Nombre_del_Héroe == h_nombre)]
-    print(newdf)
+    consulta = df[(df.Nombre == nombre) & (df.Nombre_del_Héroe == h_nombre)]
+
+# Average winrate calculator
+
+def winrate_calculator():
+    w = consulta.Ganaste
+    print (w)
+    wr = w.value_counts(normalize = True)
+    percent100 = w.value_counts(normalize=True).mul(100).round(1).astype(str) + '%'
+    print (percent100)
 
 main()
-
-
-nombre = input("Introduce el nombre ")
-h_nombre = input("Introduce el nombre del Heroe ")
-newdf = df[(df.Nombre == nombre) & (df.Nombre_del_Héroe == h_nombre)]
-print(newdf.)
-
+simple_query()
+winrate_calculator()
